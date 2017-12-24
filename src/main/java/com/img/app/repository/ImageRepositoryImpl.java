@@ -19,7 +19,7 @@ public class ImageRepositoryImpl implements ImageRespository{
 	public ImgModel<BufferedImage> getImage(Integer groupId, Integer memberId){
 		
 		BufferedImage bufferImage = new BufferedImage(900,600,BufferedImage.TYPE_INT_ARGB);
-		formatImage(bufferImage);
+		formatImage(bufferImage, groupId, memberId);
 		
 		return new ImgModel<BufferedImage>() {{setBufferImage(bufferImage);setHttpStatus(HttpStatus.OK);}};
 	}
@@ -35,7 +35,7 @@ public class ImageRepositoryImpl implements ImageRespository{
 		return logo;
 	}
 	
-	private void formatImage(BufferedImage bufferImage) {
+	private void formatImage(BufferedImage bufferImage, Integer groupId, Integer memberId) {
 		Graphics2D graphics = bufferImage.createGraphics();
 		graphics.setBackground(Color.white);
 		graphics.fillRect(0, 0, 900, 600);
@@ -43,6 +43,8 @@ public class ImageRepositoryImpl implements ImageRespository{
 		graphics.setFont(new Font("TimesRoman", Font.PLAIN, 50)); 
 		
 		graphics.drawString("Hello!!", 70, 70);
+		graphics.drawString(groupId.toString(), 250, 70);
+		graphics.drawString(memberId.toString(), 450, 70);
 		
 		graphics.drawImage(getLogo(), null, 100, 100);
 		
