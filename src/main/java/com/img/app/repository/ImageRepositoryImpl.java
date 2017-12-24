@@ -1,8 +1,5 @@
 package com.img.app.repository;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -13,13 +10,15 @@ import org.springframework.stereotype.Repository;
 
 import com.img.app.controller.model.ImgModel;
 
+import static com.img.app.util.ImageUtil.formatImage;;
+
 @Repository
 public class ImageRepositoryImpl implements ImageRespository{
 	
 	public ImgModel<BufferedImage> getImage(Integer groupId, Integer memberId){
 		
 		BufferedImage bufferImage = new BufferedImage(900,600,BufferedImage.TYPE_INT_ARGB);
-		formatImage(bufferImage, groupId, memberId);
+		formatImage(bufferImage, groupId, memberId, getLogo());
 		
 		return new ImgModel<BufferedImage>() {{setBufferImage(bufferImage);setHttpStatus(HttpStatus.OK);}};
 	}
@@ -33,21 +32,5 @@ public class ImageRepositoryImpl implements ImageRespository{
 			e.printStackTrace();
 		}
 		return logo;
-	}
-	
-	private void formatImage(BufferedImage bufferImage, Integer groupId, Integer memberId) {
-		Graphics2D graphics = bufferImage.createGraphics();
-		graphics.setBackground(Color.white);
-		graphics.fillRect(0, 0, 900, 600);
-		graphics.setColor(Color.black);
-		graphics.setFont(new Font("TimesRoman", Font.PLAIN, 50)); 
-		
-		graphics.drawString("Hello!!", 70, 70);
-		graphics.drawString(groupId.toString(), 250, 70);
-		graphics.drawString(memberId.toString(), 450, 70);
-		
-		graphics.drawImage(getLogo(), null, 100, 100);
-		
-		graphics.dispose();
 	}
 }
